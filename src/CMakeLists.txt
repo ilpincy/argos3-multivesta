@@ -1,5 +1,20 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8)
 project(argos3_multivesta)
+
+
+#
+# Called to bundle multivesta along with the generated JAR
+#
+function (_bundle_multivesta_jar target)
+  add_custom_command(
+    TARGET ${target}
+    POST_BUILD
+    COMMAND cmake -E remove_directory multivesta_jar
+    COMMAND cmake -E make_directory multivesta_jar
+    COMMAND cmake -E chdir multivesta_jar jar xf ${CMAKE_SOURCE_DIR}/multivesta/multivesta.jar
+    COMMAND cmake -E remove_directory multivesta_jar/META-INF
+    COMMAND cmake -E chdir multivesta_jar jar uf ${CMAKE_BINARY_DIR}/${target}.jar .)
+endfunction (_bundle_multivesta_jar target)
 
 #
 # Check required packages
@@ -67,5 +82,6 @@ set(MULTIVESTA_ARGOS_STATE_TESTING_SOURCES testing/ARGoSMultiVestaTesting.java)
 set(CMAKE_JAVA_JAR_ENTRY_POINT testing/ARGoSMultiVestaTesting)
 add_jar(ARGoSMultiVestaTesting
   ${MULTIVESTA_ARGOS_STATE_SOURCES}
-  ${MULTIVESTA_ARGOS_STATE_TESTING_SOURCES}
-  multivesta/multivesta.jar)
+  ${MULTIVESTA_ARGOS_STATE_TESTING_SOURCES})
+# Bundle multivesta.jar with it
+_bundle_multivesta_jar(ARGoSMultiVestaTesting)
