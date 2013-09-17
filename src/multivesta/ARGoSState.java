@@ -19,15 +19,24 @@ public class ARGoSState extends NewState {
       // Load the wrapper library
       // TODO: the path to the library should be a parameter
       System.loadLibrary("argos3_multivesta");
+      //ANDREA: any ARGOS-specific parameter (i.e. not provided y ParametersForState) is provided by the user as a unique String when launching the multivesta client with: -o "param1 param2 param3". Thus we need a StringTokenizer to obtain each parameter.
+      /*final StringTokenizer otherparams = new StringTokenizer(params.getOtherParameters());
+		  String libraryPath = otherparams.nextToken();
+      System.loadLibrary(libraryPath);*/
+      
       // Initialize ARGoS
       // TODO: the path to the config file should be a parameter
       initARGoS("../test_footbot_lua.xml");
+      //ANDREA: the path of the model has to be provided by the user when launching the client of multivesta. Such path is obtained with params.getModel();
+      /*initARGoS(params.getModel());*/
+      //ANDREA: Here we do not need yet to "launch" ARGoS. It has to be launched only in setSimulatorForNewSimulation.
    }
    
    @Override
    public void setSimulatorForNewSimulation(int randomSeed) {
       // Reset ARGoS with the wanted random seed
       resetARGoS(randomSeed);
+      //ANDREA: at the end of this method, ARGoS has to be ready to perform a new simulation: we have to set a new seed, we have to reset the intial state, and we have to clean the datastructures.
    }
 	
    @Override
@@ -35,6 +44,7 @@ public class ARGoSState extends NewState {
       // Return current time step in ARGoS
       // TODO: could return the current time in seconds instead
       return getTimeFromARGoS();
+      //ANDREA: MultiVeStA does care about the granularity of time. It is up to us. This is a value that we can use when doing queries. 
    }
 
    @Override
@@ -42,6 +52,16 @@ public class ARGoSState extends NewState {
       // Perform one simulation step for ARGoS
       // TODO: how do you know when the simulation is finished?
       stepARGoS();
+      
+      /*ANDREA:
+      1) define observeARGoS(2) such that it evaluates to 1.0 if the experiment has been concluded, and 0.0 otherwise
+      2) then write 
+          stepARGoS();
+          if(rval(2) == 1.0){
+            setLastStateAlreadyComputed(true);
+          }
+          From now on, for this simulation, every time multivesta will ask ARGoS to perform a simulation, it will only increase the number of simulation steps without forwarding the request to ARGoS
+      */
    }
    
    @Override
@@ -53,8 +73,23 @@ public class ARGoSState extends NewState {
    @Override
    public double rval(int observation) {
       // Perform an observation on ARGoS
+      
+      if(observation == 0) {
+        return getTime();
+      }
+   
+      if(observation == 1) {
+        return getNumberOfSteps();
+      }
+      
       // This interfaces directly with the user-defined loop functions
       return observeARGoS(observation);
    }
+   
+  @Override
+	public void destroyState(){
+		//ANDREA: this method is invoked when argos is not necessary anymore: i.e. when the analysis has been completed.
+    destroyARGoS();
+	}
    
 }
