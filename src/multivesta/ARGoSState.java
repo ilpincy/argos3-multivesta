@@ -5,44 +5,56 @@ import vesta.mc.ParametersForState;
 
 public class ARGoSState extends NewState {
 
+   private native void initARGoS(String config_file);
+   private native void destroyARGoS();
+   private native double getTimeFromARGoS();
+   private native void resetARGoS(int randomSeed);
+   private native void stepARGoS();
+   private native void runARGoS();
+   private native double observeARGoS(int observation);
+
    public ARGoSState(ParametersForState params){
-      super(params);//this allows to store all the "standard" parameters contained in params. Further simulator-specific parameters can be provided as a string by the user via the -o command. Such String can be accessed as params.getOtherParameters()
-      //any further initialization required by argos that has to be done once, and not at the beginning of each simulation (e.g. loading of xml file...)
+      // Initialize MultiVeStA
+      super(params);
+      // Load the wrapper library
+      // TODO: the path to the library should be a parameter
+      System.loadLibrary("argos3_multivesta");
+      // Initialize ARGoS
+      // TODO: the path to the config file should be a parameter
+      initARGoS("../test_footbot_lua.xml");
    }
-	
+   
    @Override
    public void setSimulatorForNewSimulation(int randomSeed) {
-      // this method is invoked by multivesta before performing a new simulation. It has to "(re)set" the simulator to perform a new simulation, and the provided parameter has to be used to set the random seed of ARGoS.		
+      // Reset ARGoS with the wanted random seed
+      resetARGoS(randomSeed);
    }
 	
    @Override
    public double getTime() {
-      // return the current simulated time.
-      return 0;
+      // Return current time step in ARGoS
+      // TODO: could return the current time in seconds instead
+      return getTimeFromARGoS();
    }
 
    @Override
    public void performOneStepOfSimulation() {
-      // this method is invoked by multivesta to order the simulator to perform a step of simulation	
-   }
-   
-   @Override
-   public double rval(int observation) {
-      //this method is used to perform observations on the current state of the simulation. "Model-independent observations" have to be defined here. The model-specific ones have to be dealt by a provided state evaluator. 
-      switch (observation) {
-         case 0:
-            return this.getTime();
-         case 1:
-            return this.getNumberOfSteps();	
-         default:
-            return this.getStateEvaluator().getVal(observation, this);
-            //otherwise, an alternative is default: return 0; //invoke the ARGoS side counterpart of rval
-      }
+      // Perform one simulation step for ARGoS
+      // TODO: how do you know when the simulation is finished?
+      stepARGoS();
    }
    
    @Override
    public void performWholeSimulation() {
-      // We can ignore this method for now
+      // Run a full experiment with ARGoS
+      runARGoS();
+   }
+   
+   @Override
+   public double rval(int observation) {
+      // Perform an observation on ARGoS
+      // This interfaces directly with the user-defined loop functions
+      return observeARGoS(observation);
    }
    
 }
