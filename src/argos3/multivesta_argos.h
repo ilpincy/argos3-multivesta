@@ -20,6 +20,8 @@ extern "C" {
    JNIEXPORT void JNICALL Java_multivesta_ARGoSState_runARGoS(JNIEnv* pc_env, jobject t_obj);
 
    JNIEXPORT jdouble JNICALL Java_multivesta_ARGoSState_observeARGoS(JNIEnv* pc_env, jobject t_obj, jint n_observation);
+   
+   JNIEXPORT jboolean JNICALL Java_multivesta_ARGoSState_getIsExperimentFinishedFromARGoS(JNIEnv* pc_env, jobject t_obj);
 
 #ifdef __cplusplus
 }
