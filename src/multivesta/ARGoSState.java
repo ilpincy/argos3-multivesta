@@ -14,6 +14,7 @@ public class ARGoSState extends NewState {
    private native double observeARGoS(int observation);
    private native boolean getIsExperimentFinishedFromARGoS();
 
+   
    public ARGoSState(ParametersForState params){
       // Initialize MultiVeStA
       super(params);
@@ -51,24 +52,9 @@ public class ARGoSState extends NewState {
    @Override
    public void performOneStepOfSimulation() {
       // Perform one simulation step for ARGoS
-      // TODO: how do you know when the simulation is finished? //ANDREA: DONE
-      //stepARGoS();
-      
+      // TODO: how do you know when the simulation is finished? 
+      //ANDREA: DONE, because MultiVeStA invokes performOneStepOfSimulation() only if getIsSimulationFinished() gives false. If the simulation has been completed in this step, this method will not be invoked anymore for this simulation.
       stepARGoS();
-      //If the simulation has been completed in this step, this method will not be invoked anymore.
-      if(getIsExperimentFinishedFromARGoS()){
-        setLastStateAlreadyComputed(true);
-      }
-      
-      /*ANDREA:
-      1) define observeARGoS(2) such that it evaluates to 1.0 if the experiment has been concluded, and 0.0 otherwise
-      2) then write 
-          stepARGoS();
-          if(rval(2) == 1.0){
-            setLastStateAlreadyComputed(true);
-          }
-          From now on, for this simulation, every time multivesta will ask ARGoS to perform a simulation, it will only increase the number of simulation steps without forwarding the request to ARGoS
-      */
    }
    
    @Override
@@ -76,6 +62,12 @@ public class ARGoSState extends NewState {
       // Run a full experiment with ARGoS
       runARGoS();
    }
+ 
+   @Override
+	 public boolean getIsSimulationFinished(){
+      // tell to multivesta if the experiment has been completed
+		  return getIsExperimentFinishedFromARGoS();
+	 }
    
    @Override
    public double rval(int observation) {
@@ -107,3 +99,8 @@ public class ARGoSState extends NewState {
 	}
    
 }
+
+//javac -cp ./multivesta/multivesta.jar:./  ./multivesta/ARGoSState.java
+//javac -cp ./multivesta/multivesta.jar:./  ./testing/ARGoSMultiVestaTesting.java
+//java -cp ./multivesta/multivesta.jar:./  multivesta.ARGoSState 
+//java -cp ./multivesta/multivesta.jar:./  testing.ARGoSMultiVestaTesting
