@@ -56,7 +56,7 @@ public class ARGoSState extends NewState {
       
       stepARGoS();
       //If the simulation has been completed in this step, this method will not be invoked anymore.
-      if(rval(2) == 1.0){
+      if(getIsExperimentFinishedFromARGoS()){
         setLastStateAlreadyComputed(true);
       }
       
