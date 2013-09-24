@@ -27,7 +27,6 @@ public class ARGoSState extends NewState {
 	   super(params);
 	   /* Load the wrapping library */
 	   System.loadLibrary(ARGOS_LIBRARY);
-	   
 	   /* Initialize ARGoS */
 	   initARGoS(params.getModel());
    }
