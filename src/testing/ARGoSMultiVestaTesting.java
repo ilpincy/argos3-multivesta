@@ -7,14 +7,13 @@ public class ARGoSMultiVestaTesting {
 
 	public static void main(String[] args) {
 		String configFile = "../src/testing/diffusion_10.argos";
-		//String otherParameters = "libraryPath=argos3_multivesta";
-		//String otherParameters = "libraryPath=libargos3_multivesta";
-		//String otherParameters = "libraryPath=/home/andrea/Dropbox/prova/argos3-multivesta/build/libargos3_multivesta";
-		String otherParameters = "libraryPath=";
+		//String otherParameters = ARGoSState.ARGOSLIBRARYPATH_PARAM +"argos3_multivesta";
+		//String otherParameters = ARGoSState.ARGOSLIBRARYPATH_PARAM +"+"libargos3_multivesta";
+		String otherParameters;
 		if(args.length != 0)
-			otherParameters += args[0];
+			otherParameters = ARGoSState.ARGOSLIBRARYPATH_PARAM + args[0];
 		else  
-			otherParameters += "libargos3_multivesta";
+			otherParameters = ARGoSState.ARGOSLIBRARYPATH_PARAM + "libargos3_multivesta";
 		ParametersForState params = new ParametersForState(configFile, otherParameters);
 		ARGoSState a = new ARGoSState(params);
 		a.performWholeSimulation();	
