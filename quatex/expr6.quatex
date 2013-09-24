@@ -1,0 +1,2 @@
+stepsToComplete() = if { s.rval(2) == 1.0 } then { s.rval(1) } else # stepsToComplete() fi ;
+eval E[ stepsToComplete() ] ;

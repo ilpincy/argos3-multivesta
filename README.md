@@ -62,3 +62,9 @@ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd mul
 
 or
 java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr4.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 3 -a 0.6 -d1 10.0 -sots 0 -osws ONESTEP  
+
+or
+java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
+
+or
+java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws WHOLESIMULATION
