@@ -17,7 +17,6 @@ public class ARGoSState extends NewState {
    private native boolean isExperimentFinishedInARGoS();
 	
    private static final String ARGOS_LIBRARY = "argos3_multivesta";
-   public static String ARGOSLIBRARYPATH_PARAM = "libraryPath=";
 
    public static final int OBSERVE_TIME = 0;
    public static final int OBSERVE_STEP = 1;
@@ -27,23 +26,7 @@ public class ARGoSState extends NewState {
 	   /* Initialize MultiVeStA */
 	   super(params);
 	   /* Load the wrapping library */
-	   //System.loadLibrary(ARGOS_LIBRARY);
-	   String argosLibraryPath=null;
-	   final StringTokenizer otherparams = new StringTokenizer(params.getOtherParameters());
-	   while (otherparams.hasMoreElements()) {
-		   final String param = otherparams.nextToken().trim();
-		   if (param.startsWith(ARGOSLIBRARYPATH_PARAM)) {
-			   argosLibraryPath = param.replace(ARGOSLIBRARYPATH_PARAM, "");
-		   } else {
-			   System.out.println("Ignored parameter \"" + param + "\": it's not among the supported parameters.");
-		   }
-	   }
-
-	   if(argosLibraryPath == null){
-		   System.out.println("The library has not been provided. I set the default one:"+ARGOS_LIBRARY);
-		   argosLibraryPath = ARGOS_LIBRARY;
-	   }
-	   System.loadLibrary(argosLibraryPath);
+	   System.loadLibrary(ARGOS_LIBRARY);
 	   
 	   /* Initialize ARGoS */
 	   initARGoS(params.getModel());
