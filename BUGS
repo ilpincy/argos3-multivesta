@@ -1,0 +1,13 @@
+1) Problemi con destroy argos
+Faccio una analisi: OK.
+Ne faccio un'altra senza ammazzare MultiVeStA server: problema!
+  terminate called after throwing an instance of 'argos::CARGoSException'
+    what():  [FATAL] Error initializing controllers
+  [FATAL] Controller id "lua" duplicated
+  Aborted (core dumped)
+  
+  
+2) Credo ci sia un errore nel seguente metodo. Ad occhio mi sembra che mi dai il massimo tempo simulato della settato per simulazione. Io invece voglio sapere qual'è il tempo simulato attuale!
+JNIEXPORT jdouble JNICALL Java_multivesta_ARGoSState_getTimeFromARGoS(JNIEnv* pc_env, jobject t_obj) {
+   return pcSimulator->GetMaxSimulationClock();
+}

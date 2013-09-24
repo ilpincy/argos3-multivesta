@@ -54,17 +54,20 @@ where	1)MODEL.argos is the name of the file containing the model specification
 
 	SOME OPTIONAL PARAMETERS
 	8)ONESTEPORWHOLESIMULATION: is ONESTEP if the simulation should be performed step-wise (i.e. MultiVeStA requires to perform single steps of simulation), or WHOLESIMULATION if MultiVeStA simply asks the simulator to perform a simulation
-	9)di: each di is a delta used for one of the estimated properties. If this list is provided, then 1 di must be defined for each eval clause of the query, or for each "E[...]" in the keyword "parametric" of the query
+	9)di: each di is a delta used for one of the  properties. If this list is provided, then 1 di must be defined for each eval clause of the query, or for each "E[...]" in the keyword "parametric" of the query
 	10)MAXNUMBEROFSIMULATIONS: the maximum number of simulations. In case the analysis terminates due to this constraint, the current confidence interval of each proeprty is also returned.
 
 e.g.:
-java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10.argos -f ../quatex/expr1.quatex  -l ../serversList/oneLocalServer -vp TRUE -bs 3 -a 0.1 -d1 10.0 -sots 0 -osws ONESTEP
+java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr1.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 2.0 -sots 0 -osws ONESTEP
 
 or
-java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr4.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 3 -a 0.6 -d1 10.0 -sots 0 -osws ONESTEP  
+java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr3.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 3 -a 0.1 -d1 1.0 -sots 0 -osws ONESTEP  
 
 or
 java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
+
+or
+java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/twoLocalServers -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
 
 or
 java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws WHOLESIMULATION
