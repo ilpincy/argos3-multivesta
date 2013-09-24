@@ -16,121 +16,111 @@ public class ARGoSState extends NewState {
    private native double observeARGoS(int observation);
    private native boolean isExperimentFinishedInARGoS();
 	
-   private static String ARGOSLIBRARYPATH_PARAM = "libraryPath=";
-   private static String ARGOSLIBRARYPATH = "argos3_multivesta";
+   private static final String ARGOS_LIBRARY = "argos3_multivesta";
+
+   public static final int OBSERVE_TIME = 0;
+   public static final int OBSERVE_STEP = 1;
+   public static final int OBSERVE_DONE = 2;
 
    public ARGoSState(ParametersForState params) {
-      // Initialize MultiVeStA
+      /* Initialize MultiVeStA */
       super(params);
-		
-      /*
-       * Any ARGOS-specific parameter (i.e. not provided by
-       * ParametersForState) is provided by the user as a unique String when
-       * launching the multivesta client with: -o "param1 param2 param3". Thus
-       * we need a StringTokenizer to obtain each parameter.
-       */
-		
-      // Load the wrapper library
-      String argosLibraryPath=null;;
-      final StringTokenizer otherparams = new StringTokenizer(params.getOtherParameters());
-      while (otherparams.hasMoreElements()) {
-         final String param = otherparams.nextToken().trim();
-         if (param.startsWith(ARGOSLIBRARYPATH_PARAM)) {
-            argosLibraryPath = param.replace(ARGOSLIBRARYPATH_PARAM, "");
-         } else {
-            System.out.println("Ignored parameter \"" + param + "\": it's not among the supported parameters.");
-         }
-      }
-		
-      if(argosLibraryPath == null){
-         System.out.println("The library has not been provided. I set the default one:"+ARGOSLIBRARYPATH);
-         argosLibraryPath = ARGOSLIBRARYPATH;
-      }
-		
-      System.loadLibrary(argosLibraryPath);
-
-      // Initialize ARGoS
-      //the path of the model has to be provided by the user when launching the client of multivesta.
+      /* Load the wrapping library */
+      System.loadLibrary(ARGOS_LIBRARY);
+      /* Initialize ARGoS */
       initARGoS(params.getModel());
    }
 
+   /**
+    * Reset ARGoS with the wanted random seed.
+    * @param randomSeed The random seed of choice.
+    */
    @Override
    public void setSimulatorForNewSimulation(int randomSeed) {
-      // Reset ARGoS with the wanted random seed
       resetARGoS(randomSeed);
    }
 
+   /**
+    * Return the current simulation time step.
+    * @return the current simulation time step.
+    * @todo It could return time in seconds, instead of steps
+    */
    @Override
    public double getTime() {
-      // Return current time step in ARGoS
-      /*
-       * MultiVeStA does care about the granularity of time. It is up
-       * to us, as this is a value that we can use when doing queries.
-       */
-
       return getTimeFromARGoS();
-
    }
 
+   /**
+    * Performs one step of simulation.
+    * @todo When the simulation is finished, this method should not execute step anymore
+    */
    @Override
    public void performOneStepOfSimulation() {
-      /*
-       * Perform one simulation step for ARGoS. If the simulation finishes in
-       * this step, this method will not be invoked anymore for this
-       * simulation.
-       */
       stepARGoS();
    }
 
+   /**
+    * Runs an experiment up to completion.
+    */
    @Override
    public void performWholeSimulation() {
-      // Run a full experiment with ARGoS
       runARGoS();
    }
 
+   /**
+    * Returns <tt>true</tt> if the current experiment is finished, <tt>false</tt> otherwise.
+    * @return <tt>true</tt> if the current experiment is finished, <tt>false</tt> otherwise.
+    */
    @Override
    public boolean getIsSimulationFinished() {
-      // Tell multivesta whether the experiment has been completed
       return isExperimentFinishedInARGoS();
    }
 
+   /**
+    * Performs an observation on the current experiment.
+    * The current values for <tt>observation</tt> are hardcoded:
+    * <table>
+    * <tr>
+    * <th>Constant<th>
+    * <th>Value</th>
+    * <th>Meaning</th>
+    * </tr>
+    * <tr>
+    * <td><tt>OBSERVE_TIME</tt></td>
+    * <td>0</td>
+    * <td>The output of <tt>getTime()</tt></td>
+    * </tr>
+    * <tr>
+    * <td><tt>OBSERVE_STEPS</tt></td>
+    * <td>1</td>
+    * <td>The output of <tt>getNumberOfSteps()</tt></td>
+    * </tr>
+    * <tr>
+    * <td><tt>OBSERVE_DONE</tt></td>
+    * <td>2</td>
+    * <td>The output of <tt>getIsSimulationFinished()</tt></td>
+    * </tr>
+    * </table>
+    * Any value above 2 is passed to the analogous method in the ARGoS
+    * loop functions that returns user-defined observations.
+    */
    @Override
    public double rval(int observation) {
-      // Perform an observation on ARGoS
-
-      // Model-independent observations
-      if (observation == 0) {
-         return getTime();
+      switch(observation) {
+         case OBSERVE_TIME: return getTime();
+         case OBSERVE_STEP: return getNumberOfSteps();
+         case OBSERVE_DONE: return getIsSimulationFinished() ? 1.0 : 0.0;
+         default:           return observeARGoS(observation);
       }
-
-      if (observation == 1) {
-         return getNumberOfSteps();
-      }
-
-      if (observation == 2) {
-         if (isExperimentFinishedInARGoS())
-            return 1.0;
-         else
-            return 0.0;
-      }
-
-      // model-specific observations
-      // This interfaces directly with the user-defined loop functions
-      return observeARGoS(observation);
    }
 
+   /**
+    * Releases the resources allocated by ARGoS.
+    * This method must be called when ARGoS is not necessary anymore.
+    */
    @Override
    public void destroyState() {
-      /*
-       * This method is invoked by a MultiVeSta server when argos is not
-       * necessary anymore: i.e. when the analysis has been completed.
-       */
       destroyARGoS();
    }
 
 }
-
-//javac -cp ./multivesta/multivesta.jar:./  ./multivesta/ARGoSState.java
-//javac -cp ./multivesta/multivesta.jar:./  ./testing/ARGoSMultiVestaTesting.java
-//java -cp ./multivesta/multivesta.jar:./  multivesta.ARGoSState 
-//java -cp ./multivesta/multivesta.jar:./  testing.ARGoSMultiVestaTesting
