@@ -74,7 +74,7 @@ JNIEXPORT jdouble JNICALL Java_multivesta_ARGoSState_observeARGoS(JNIEnv* pc_env
 /****************************************/
 /****************************************/
 
-JNIEXPORT jboolean JNICALL Java_multivesta_ARGoSState_getIsExperimentFinishedFromARGoS(JNIEnv* pc_env, jobject t_obj) {
+JNIEXPORT jboolean JNICALL Java_multivesta_ARGoSState_isExperimentFinishedInARGoS(JNIEnv* pc_env, jobject t_obj) {
    return pcSimulator->IsExperimentFinished();
 }
 
