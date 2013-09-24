@@ -119,6 +119,7 @@ public class ARGoSState extends NewState {
     */
    @Override
    public void destroyState() {
+      System.out.println("ARGoSState.destroyState");
       destroyARGoS();
    }
 

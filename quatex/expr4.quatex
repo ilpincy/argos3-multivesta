@@ -1,0 +1,3 @@
+timeAtStep(x) = if { s.rval(1) >= x } then { s.rval(0) } else # timeAtStep({x}) fi ;
+eval parametric(E[ timeAtStep(x) ],x,0.0,1.0,10.0) ;
+

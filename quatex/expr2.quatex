@@ -1,0 +1,7 @@
+peopleAtRightDestination(x) = if { s.rval(0) >= x } then { s.rval(11) } else # peopleAtRightDestination({x}) fi ;
+peopleAtLeftDestination(x) = if { s.rval(0) >= x } then { s.rval(12) } else # peopleAtLeftDestination({x}) fi ;
+peopleAtDestination(x) = if { s.rval(0) >= x } then { s.rval(13) } else # peopleAtDestination({x}) fi ;
+avgConnectivity(x) = if { s.rval(0) >= x } then { s.rval(14) } else # avgConnectivity({x}) fi ;
+numberOfLSA(x) = if { s.rval(0) >= x } then { s.rval(3) } else # numberOfLSA({x}) fi ;
+eval parametric(E[ peopleAtRightDestination(x) ], E[ peopleAtLeftDestination(x) ], E[ peopleAtDestination(x) ], E[ avgConnectivity(x) ], E[ numberOfLSA(x) ],x,0.0,1.0,50.0) ;
+
