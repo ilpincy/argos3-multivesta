@@ -90,7 +90,7 @@ public class ARGoSState extends NewState {
 
    @Override
    public boolean getIsSimulationFinished() {
-      // Tell multivesta whether the experiment has been completed
+      // Tell MultiVeStA whether the experiment has been completed
       return isExperimentFinishedInARGoS();
    }
 
