@@ -22,7 +22,7 @@ Running the test
 
 While in the directory build/, type:
 
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar testing.ARGoSMultiVestaTesting
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar testing.ARGoSMultiVestaTesting
 
 The ARGoS GUI should appear and allow you to run a script. Click on File->Open
 and select the file argos3-multivesta/src/testing/gaslike.lua. Run it, and the robots
@@ -32,21 +32,21 @@ Running MultiVeStA
 ==================
 
 ***Running a MultiVeStA server
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.mc.NewVestaServer PORTNUMBER
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.mc.NewVestaServer PORTNUMBER
 or
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar entryPointMultivesta.UniqueEntryPoint server PORTNUMBER
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar entryPointMultivesta.UniqueEntryPoint server PORTNUMBER
 
 where 	1) PORTNUMBER is the port where the server will receive the information from the client (at address ipoftheserver:PORTNUMBER)
 
 e.g.:
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.mc.NewVestaServer 49141
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.mc.NewVestaServer 49141
 
 
 
 ***Running the MultiVeStA clinet
-$ java  -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m MODEL.argos -f QUERY.quatex -l SERVERSLIST -vp VISUALIZEPLOT -bs BLOCK_SIZE -a ALPHA -d1 DELTA -sots SEEDOFTHESEEDS -osws ONESTEPORWHOLESIMULATION -ds [d1,d2,d3...] -ms MAXNUMBEROFSIMULATIONS
+$ java  -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m MODEL.argos -f QUERY.quatex -l SERVERSLIST -vp VISUALIZEPLOT -bs BLOCK_SIZE -a ALPHA -d1 DELTA -sots SEEDOFTHESEEDS -osws ONESTEPORWHOLESIMULATION -ds [d1,d2,d3...] -ms MAXNUMBEROFSIMULATIONS
 
-$ java  -cp ARGoSMultiVestaTesting.jar entryPointMultivesta.UniqueEntryPoint client -sd multivesta.ARGoSState -m MODEL.argos -f QUERY.quatex -l SERVERSLIST -vp VISUALIZEPLOT -bs BLOCK_SIZE -a ALPHA -d1 DELTA -sots SEEDOFTHESEEDS -osws ONESTEPORWHOLESIMULATION -ds [d1,d2,d3...] -ms MAXNUMBEROFSIMULATIONS
+$ java  -cp ARGoSMultiVesta.jar entryPointMultivesta.UniqueEntryPoint client -sd multivesta.ARGoSState -m MODEL.argos -f QUERY.quatex -l SERVERSLIST -vp VISUALIZEPLOT -bs BLOCK_SIZE -a ALPHA -d1 DELTA -sots SEEDOFTHESEEDS -osws ONESTEPORWHOLESIMULATION -ds [d1,d2,d3...] -ms MAXNUMBEROFSIMULATIONS
 
 where	1)MODEL.argos is the name of the file containing the model specification
 	2)QUERY.quatex is the name of the file containing the specification of the property of interest
@@ -62,16 +62,16 @@ where	1)MODEL.argos is the name of the file containing the model specification
 	10)MAXNUMBEROFSIMULATIONS: the maximum number of simulations. In case the analysis terminates due to this constraint, the current confidence interval of each proeprty is also returned.
 
 e.g.:
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr1.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 2.0 -sots 0 -osws ONESTEP
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr1.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 2.0 -sots 0 -osws ONESTEP
 
 or
-$ java -Djava.library.path=. -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr3.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 3 -a 0.1 -d1 1.0 -sots 0 -osws ONESTEP  
+$ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr3.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 3 -a 0.1 -d1 1.0 -sots 0 -osws ONESTEP  
 
 or
-$ java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
+$ java -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
 
 or
-$ java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/twoLocalServers -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
+$ java -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/twoLocalServers -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws ONESTEP
 
 or
-$ java -cp ARGoSMultiVestaTesting.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws WHOLESIMULATION
+$ java -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m ../src/testing/diffusion_10B.argos -f ../quatex/expr6.quatex  -l ../serversLists/oneLocalServer -vp TRUE -bs 30 -a 0.1 -d1 5.0 -sots 0 -osws WHOLESIMULATION

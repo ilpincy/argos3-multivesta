@@ -85,8 +85,11 @@ set(MULTIVESTA_ARGOS_STATE_TESTING_SOURCES testing/ARGoSMultiVestaTesting.java)
 
 # Create test jar
 set(CMAKE_JAVA_JAR_ENTRY_POINT testing/ARGoSMultiVestaTesting)
-add_jar(ARGoSMultiVestaTesting
+#set(CMAKE_JAVA_JAR_ENTRY_POINT entryPointMultivesta/UniqueEntryPoint)
+
+
+add_jar(ARGoSMultiVesta
   ${MULTIVESTA_ARGOS_STATE_SOURCES}
   ${MULTIVESTA_ARGOS_STATE_TESTING_SOURCES})
 # Bundle multivesta.jar with it
-_bundle_multivesta_jar(ARGoSMultiVestaTesting)
+_bundle_multivesta_jar(ARGoSMultiVesta)
