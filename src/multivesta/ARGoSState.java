@@ -23,7 +23,7 @@ public class ARGoSState extends NewState {
    public static final int OBSERVE_DONE = 2;
 
    public ARGoSState(ParametersForState params) {
-	   /* Initialize MultiVeStA */
+     /* Initialize MultiVeStA */
 	   super(params);
 	   /* Load the wrapping library */
 	   System.loadLibrary(ARGOS_LIBRARY);
