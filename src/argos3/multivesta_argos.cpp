@@ -32,6 +32,8 @@ JNIEXPORT void JNICALL Java_multivesta_ARGoSState_initARGoS(JNIEnv* pc_env, jobj
 
 JNIEXPORT void JNICALL Java_multivesta_ARGoSState_destroyARGoS(JNIEnv* pc_env, jobject t_obj) {
    pcSimulator->Destroy();
+   /* Unload all ARGoS plug-ins */
+   CDynamicLoading::UnloadAllLibraries();
    LOG.Flush();
    LOGERR.Flush();
 }
