@@ -40,7 +40,8 @@ where 	1) PORTNUMBER is the port where the server will receive the information f
 
 e.g.:
 $ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.mc.NewVestaServer 49141
-
+or
+java -Djava.library.path=. -cp ARGoSMultiVesta.jar entryPointMultivesta.UniqueEntryPoint server 49141
 
 
 ***Running the MultiVeStA clinet
