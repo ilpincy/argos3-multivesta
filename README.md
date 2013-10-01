@@ -36,7 +36,8 @@ $ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.mc.NewVestaServer POR
 or
 $ java -Djava.library.path=. -cp ARGoSMultiVesta.jar entryPointMultivesta.UniqueEntryPoint server PORTNUMBER
 
-where 	1) PORTNUMBER is the port where the server will receive the information from the client (at address ipoftheserver:PORTNUMBER)
+	WHERE
+	1) PORTNUMBER is the port where the server will receive the information from the client (at address ipoftheserver:PORTNUMBER)
 
 e.g.:
 $ java -Djava.library.path=. -cp ARGoSMultiVesta.jar vesta.mc.NewVestaServer 49141
