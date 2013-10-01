@@ -49,7 +49,7 @@ $ java  -cp ARGoSMultiVesta.jar vesta.NewVesta -sd multivesta.ARGoSState -m MODE
 
 $ java  -cp ARGoSMultiVesta.jar entryPointMultivesta.UniqueEntryPoint client -sd multivesta.ARGoSState -m MODEL.argos -f QUERY.quatex -l SERVERSLIST -vp VISUALIZEPLOT -bs BLOCK_SIZE -a ALPHA -d1 DELTA -sots SEEDOFTHESEEDS -osws ONESTEPORWHOLESIMULATION -ds [d1,d2,d3...] -ms MAXNUMBEROFSIMULATIONS
 
-where	
+  where	
   1)MODEL.argos is the name of the file containing the model specification
 	2)QUERY.quatex is the name of the file containing the specification of the property of interest
 	3)SERVERSLIST is the name of the file containing the list of addresses of the MultiVeStA servers (one per line)
