@@ -49,7 +49,8 @@ link_directories(${ARGOS_LIBRARY_DIRS} ${JNI_LIBRARIES})
 
 # Header list
 set(ARGOS3_MULTIVESTA_WRAPPER_HEADERS
-  argos3/multivesta_argos.h)
+  argos3/multivesta_argos.h
+  argos3/multivesta_loop_functions.h)
 
 # Source file list
 set(ARGOS3_MULTIVESTA_WRAPPER_SOURCES

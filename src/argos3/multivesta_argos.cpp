@@ -1,4 +1,5 @@
 #include "multivesta_argos.h"
+#include "multivesta_loop_functions.h"
 #include <argos3/core/simulator/simulator.h>
 #include <argos3/core/utility/plugins/dynamic_loading.h>
 
@@ -8,6 +9,7 @@ using namespace argos;
 /****************************************/
 
 CSimulator* pcSimulator = NULL;
+CMultiVeStALoopFunctions* pcLoopFunctions = NULL;
 
 /****************************************/
 /****************************************/
@@ -25,6 +27,13 @@ JNIEXPORT void JNICALL Java_multivesta_ARGoSState_initARGoS(JNIEnv* pc_env, jobj
    pc_env->ReleaseStringUTFChars(str_config_file, pchConfigFile);
    /* Load the file */
    pcSimulator->LoadExperiment();
+   /* Get the reference to the loop functions */
+   try {
+      pcLoopFunctions = &dynamic_cast<CMultiVeStALoopFunctions&>(pcSimulator->GetLoopFunctions());
+   }
+   catch(std::bad_cast) {
+      LOGERR << "[WARNING] The loop functions can't be cast to type CMultiVeStALoopFunctions - ignoring them" << std::endl;
+   }
 }
 
 /****************************************/
@@ -70,7 +79,12 @@ JNIEXPORT void JNICALL Java_multivesta_ARGoSState_runARGoS(JNIEnv* pc_env, jobje
 /****************************************/
 
 JNIEXPORT jdouble JNICALL Java_multivesta_ARGoSState_observeARGoS(JNIEnv* pc_env, jobject t_obj, jint n_observation) {
-   return 0;
+   if(pcLoopFunctions != NULL) {
+      return pcLoopFunctions->Observe(n_observation);
+   }
+   else {
+      return 0.0f;
+   }
 }
 
 /****************************************/
