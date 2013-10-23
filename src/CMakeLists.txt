@@ -24,6 +24,9 @@ find_package(PkgConfig)
 pkg_check_modules(ARGOS REQUIRED argos3_simulator)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARGOS_PREFIX}/share/argos3/cmake)
 
+# Find the Lua package
+find_package(Lua51 REQUIRED)
+
 # Find Java
 find_package(Java REQUIRED)
 
@@ -38,7 +41,7 @@ find_package(JNI REQUIRED)
 add_definitions(-Wall)
 
 # Set up C++ include directories
-include_directories(${ARGOS_INCLUDE_DIRS} ${JNI_INCLUDE_DIRS})
+include_directories(${ARGOS_INCLUDE_DIRS} ${JNI_INCLUDE_DIRS} ${LUA_INCLUDE_DIR})
 
 # Set up C++ link directories
 link_directories(${ARGOS_LIBRARY_DIRS} ${JNI_LIBRARIES})
@@ -59,7 +62,7 @@ set(ARGOS3_MULTIVESTA_WRAPPER_SOURCES
 
 # Create dynamic library
 add_library(argos3_multivesta SHARED ${ARGOS3_MULTIVESTA_WRAPPER_SOURCES})
-target_link_libraries(argos3_multivesta argos3core_simulator)
+target_link_libraries(argos3_multivesta argos3core_simulator ${LUA_LIBRARIES})
 
 #
 # Set up Java compilation environment
